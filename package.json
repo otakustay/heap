@@ -1,0 +1,13 @@
+{
+  "name": "heap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:otakustay/heap.git",
+  "author": "otakustay <otakustay@gmail.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
