@@ -1,0 +1,22 @@
+{
+  "name": "similar-colors",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "lint": "skr lint lib *.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "color": "^3.1.2",
+    "colors-regex": "^2.0.0",
+    "euclidean-distance": "^1.0.0",
+    "glob": "^7.1.4",
+    "lodash": "^4.17.13",
+    "pug": "^2.0.4",
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "reskript": "^0.18.4"
+  }
+}
