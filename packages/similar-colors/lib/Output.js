@@ -1,3 +1,4 @@
+const fs = require('fs');
 const chalk = require('chalk');
 
 const formatAsText = files => {
@@ -21,7 +22,21 @@ const formatAsText = files => {
         },
         []
     );
+    output.push('');
+    output.push(chalk.bgRed(`affecting ${Object.entries(files).length} files`));
+    output.push('');
     return output.join('\n');
+};
+
+const runTask = files => {
+    Object.entries(files).forEach(([filename, entries]) => {
+        const content = fs.readFileSync(filename, 'utf-8');
+        let output = content;
+        for (const {source, to} of entries) {
+            output = output.replace(source, to.name);
+        }
+        fs.writeFileSync(filename, output, 'utf-8');
+    });
 };
 
 module.exports = class Output {
@@ -39,5 +54,9 @@ module.exports = class Output {
 
     format() {
         return formatAsText(this.files);
+    }
+
+    write() {
+        runTask(this.files);
     }
 };

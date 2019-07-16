@@ -1,11 +1,11 @@
 const distance = require('euclidean-distance');
-const {isEqual, minBy} = require('lodash');
+const {isEqual, find} = require('lodash');
 const Color = require('color');
 const createPalette = require('./palette');
 
 const palette = createPalette();
 
-const mostSimilarColor = origin => minBy(palette, ({color}) => distance(origin, color.rgb().array()));
+const sameColor = origin => find(palette, ({color}) => distance(origin, color.rgb().array()) === 0);
 
 module.exports = input => {
     const color = new Color(input);
@@ -15,12 +15,17 @@ module.exports = input => {
         return null;
     }
 
-    const replacement = mostSimilarColor(rgb);
+    const replacement = sameColor(rgb);
+
+    if (!replacement) {
+        return null;
+    }
+
     return {
         source: input,
         from: {color},
         to: replacement,
         alpha: color.alpha(),
-        same: isEqual(color.alpha(1).rgb(), replacement.color.rgb()),
+        same: true,
     };
 };
