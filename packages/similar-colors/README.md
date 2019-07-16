@@ -15,3 +15,9 @@ node index.js [dirs...]
 `--ext`: 指定文件后缀，用法 `--ext less` 或 `--ext less,css`
 
 `--write`: 搜索的同时修改文件
+
+使用以上 option 可以快速替换变量:
+
+```shell
+node index.js somepath/src --same --ext less --write
+```

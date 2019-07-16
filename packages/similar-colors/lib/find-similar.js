@@ -21,6 +21,6 @@ module.exports = input => {
         from: {color},
         to: replacement,
         alpha: color.alpha(),
-        same: isEqual(color.alpha(1).rgb(), replacement.color.rgb()),
+        same: color.hex() === replacement.color.hex(),
     };
 };

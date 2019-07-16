@@ -30,12 +30,11 @@ const formatAsText = files => {
 
 const runTask = files => {
     Object.entries(files).forEach(([filename, entries]) => {
-        const content = fs.readFileSync(filename, 'utf-8');
-        let output = content;
+        let outputData = fs.readFileSync(filename, 'utf-8');
         for (const {source, to} of entries) {
-            output = output.replace(source, to.name);
+            outputData = outputData.replace(source, to.name);
         }
-        fs.writeFileSync(filename, output, 'utf-8');
+        fs.writeFileSync(filename, outputData, 'utf-8');
     });
 };
 
