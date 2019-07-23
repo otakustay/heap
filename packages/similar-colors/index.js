@@ -1,14 +1,17 @@
 const fs = require('fs');
 const {sync: glob} = require('glob');
-const {flatMap, without} = require('lodash');
+const {flatMap} = require('lodash');
 const {argv} = require('yargs');
 const findColors = require('./lib/find-colors');
 const findSimilarColor = require('./lib/find-similar');
+const findSameColor = require('./lib/find-same');
 const Output = require('./lib/Output');
 
 const {
     _: paths, // 检查的目录
-    // write = false, // 是否直接修改文件
+    write = false, // 是否直接修改文件
+    same = false, // 仅操作相等的 color
+    ext = 'less,css,js,jsx', // 文件类型
     // output = 'text' // 输出格式，text、json、html
 } = argv;
 
@@ -25,7 +28,12 @@ const analyzeColorsInFile = (file, output) => {
         const colors = findColors(text);
         for (const color of colors) {
             // const regex = escapeRegExp(color);
-            const hit = findSimilarColor(color);
+            let hit = null;
+            if (same) {
+                hit = findSameColor(color);
+            } else {
+                hit = findSimilarColor(color);
+            }
 
             if (hit) {
                 output.add(file, line, {...hit, source: color});
@@ -38,7 +46,8 @@ const analyzeColorsInFile = (file, output) => {
 };
 
 const main = () => {
-    const files = flatMap(paths, dir => glob(`${dir}/**/*.{less,css,js,jsx}`, {nodir: true}));
+    const fileExtension = ext.includes(',') ? `{${ext}}` : ext;
+    const files = flatMap(paths, dir => glob(`${dir}/**/*.${fileExtension}`, {nodir: true}));
     const output = new Output();
 
     for (const file of files) {
@@ -46,6 +55,9 @@ const main = () => {
     }
 
     console.log(output.format());
+    if (write) {
+        output.write();
+    }
 };
 
 main();
