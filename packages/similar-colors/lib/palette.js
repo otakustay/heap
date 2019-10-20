@@ -1,28 +1,50 @@
-const {flatMap, partial} = require('lodash');
 const Color = require('color');
 
-const eeColorSteps = [
-    ['dark-purple', new Color('hsl(250, 25%, 35%)'), 20, 25, 30, 35, 40, 50, 60, 70, 80, 90],
-    ['purple', new Color('hsl(230, 35%, 55%)'), 30, 40, 45, 50, 55, 60, 70, 85, 90, 95],
-    ['light-purple', new Color('hsl(230, 75%, 65%)'), 30, 40, 50, 60, 65, 70, 80, 85, 90, 95],
-    ['slate-gray', new Color('hsl(230, 10%, 35%)'), 20, 30, 35, 40, 55, 65, 75, 85, 90, 95],
-    ['blue', new Color('hsl(210, 80%, 55%)'), 30, 40, 45, 50, 55, 60, 70, 85, 90, 95],
-    ['green', new Color('hsl(85, 55%, 45%)'), 25, 30, 35, 40, 45, 50, 60, 75, 85, 95],
-    ['orange', new Color('hsl(35, 85%, 55%)'), 25, 35, 45, 50, 55, 60, 70, 85, 90, 95],
-    ['red', new Color('hsl(355, 100%, 65%)'), 30, 40, 50, 60, 65, 70, 75, 85, 90, 95],
-    ['gray', new Color('hsl(0, 0%, 40%)'), 20, 40, 60, 80, 82, 84, 88, 92, 95, 97],
+module.exports = () => [
+    {name: '--ee-brand-10', color: new Color('#0b1b4d')},
+    {name: '--ee-brand-9', color: new Color('#172b73')},
+    {name: '--ee-brand-8', color: new Color('#263d99')},
+    {name: '--ee-brand-7', color: new Color('#3952bf')},
+    {name: '--ee-brand-6', color: new Color('#5069e6')},
+    {name: '--ee-brand-5', color: new Color('#7487f2')},
+    {name: '--ee-brand-4', color: new Color('#9ca9ff')},
+    {name: '--ee-brand-3', color: new Color('#bdc4ff')},
+    {name: '--ee-brand-2', color: new Color('#dee1ff')},
+    {name: '--ee-brand-1', color: new Color('#f2f3ff')},
+    {name: '--ee-gray-10', color: new Color('#000000')},
+    {name: '--ee-gray-9', color: new Color('#282a33')},
+    {name: '--ee-gray-8', color: new Color('#595b66')},
+    {name: '--ee-gray-7', color: new Color('#8d8f99')},
+    {name: '--ee-gray-6', color: new Color('#c2c3cc')},
+    {name: '--ee-gray-5', color: new Color('#d9dae0')},
+    {name: '--ee-gray-4', color: new Color('#e9eaee')},
+    {name: '--ee-gray-3', color: new Color('#f3f3f5')},
+    {name: '--ee-gray-2', color: new Color('#f8f8fa')},
+    {name: '--ee-gray-1', color: new Color('#ffffff')},
+    {name: '--ee-warning-9', color: new Color('#802e13')},
+    {name: '--ee-warning-8', color: new Color('#a64420')},
+    {name: '--ee-warning-7', color: new Color('#cc5e32')},
+    {name: '--ee-warning-6', color: new Color('#f27c49')},
+    {name: '--ee-warning-5', color: new Color('#ff9d70')},
+    {name: '--ee-warning-4', color: new Color('#ffb794')},
+    {name: '--ee-warning-3', color: new Color('#ffd2b9')},
+    {name: '--ee-warning-2', color: new Color('#ffe9dc')},
+    {name: '--ee-warning-1', color: new Color('#fff8f3')},
+    {name: '--ee-success-9', color: new Color('#0c4d0e')},
+    {name: '--ee-success-8', color: new Color('#17731b')},
+    {name: '--ee-success-7', color: new Color('#27992e')},
+    {name: '--ee-success-6', color: new Color('#39bf46')},
+    {name: '--ee-success-5', color: new Color('#59cc64')},
+    {name: '--ee-success-4', color: new Color('#7dd988')},
+    {name: '--ee-success-3', color: new Color('#a5e6ae')},
+    {name: '--ee-success-2', color: new Color('#d1f1d6')},
+    {name: '--ee-success-1', color: new Color('#f3fff5')},
+    {name: '--ee-error-8', color: new Color('#98202d')},
+    {name: '--ee-error-7', color: new Color('#bf2e3d')},
+    {name: '--ee-error-6', color: new Color('#e64552')},
+    {name: '--ee-error-5', color: new Color('#f26c74')},
+    {name: '--ee-error-4', color: new Color('#fe9499')},
+    {name: '--ee-error-3', color: new Color('#ffb8bb')},
+    {name: '--ee-error-2', color: new Color('#ffdcdc')},
+    {name: '--ee-error-1', color: new Color('#fff2f2')},
 ];
-
-const toColorDefinition = (name, base, lightness) => {
-    const [h, s] = base.hsl().array();
-    const newColor = new Color({h, s, l: lightness});
-    return {
-        name: `@ee-${name}-${lightness}`,
-        color: newColor,
-    };
-};
-
-module.exports = () => flatMap(
-    eeColorSteps,
-    ([name, base, ...steps]) => steps.map(partial(toColorDefinition, name, base))
-);
