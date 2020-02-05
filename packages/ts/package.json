@@ -1,0 +1,12 @@
+{
+  "name": "ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "^7.1.4",
+    "lodash": "^4.17.13",
+    "yargs": "^13.2.4"
+  }
+}
